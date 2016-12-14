@@ -57,6 +57,18 @@ JOIN ratings r ON m.movieid = r.movieid
 GROUP BY g.genres
 ORDER BY avg(r.rating) DESC;
 
+/*Create a new table called actors (We are going to pretend the actor can only play in one movie) The table should
+ include name, character name, foreign key to movies and date of birth at least plus an id field.*/
+CREATE TABLE public.actors (
+  id SERIAL NOT NULL DEFAULT nextval('actors_id_seq'::regclass),
+  actor_name CHARACTER VARYING(200) NOT NULL,
+  character_name CHARACTER VARYING(200) NOT NULL,
+  movieid INTEGER NOT NULL,
+  date_of_brith DATE NOT NULL,
+  FOREIGN KEY (movieid) REFERENCES public.movies (movieid)
+  MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
 /*Pick 3 movies and create insert statements for 10 actors each.You should use the multi value insert statements*/
 INSERT INTO actors (actor_name, character_name, movieid, date_of_brith) VALUES ('Tom Hanks', 'Sheriff Woody', 1,
                                                                                 '7/9/1956'),
